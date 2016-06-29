@@ -1,5 +1,5 @@
 # DispatchTouchEventTest<br>
-http://www.cnblogs.com/sunzn/archive/2013/05/10/3064129.html
+http://www.cnblogs.com/sunzn/archive/2013/05/10/3064129.html<br>
 ▐ 事件分发：public boolean dispatchTouchEvent(MotionEvent ev)
 
 Touch 事件发生时 Activity 的 dispatchTouchEvent(MotionEvent ev) 方法会以隧道方式（从根元素依次往下传递直到最内层子元素或在中间某一元素中由于某一条件停止传递）将事件传递给最外层 View 的 dispatchTouchEvent(MotionEvent ev) 方法，并由该 View 的 dispatchTouchEvent(MotionEvent ev) 方法对事件进行分发。dispatchTouchEvent 的事件分发逻辑如下：
