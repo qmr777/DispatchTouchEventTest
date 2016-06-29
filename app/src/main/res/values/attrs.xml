@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="speed" format="float"/>
+    <attr name="maxRadius" format="float"/>
+    <attr name="createTime" format="float"/>
+    <attr name="color" format="color"/>
+    <attr name="isFill" format="boolean"/>
+
+    <declare-styleable name="WaveView">
+        <attr name="speed"/>
+        <attr name="maxRadius"/>
+        <attr name="color"/>
+        <attr name="createTime"/>
+        <attr name="isFill"/>
+    </declare-styleable>
+
+</resources>
