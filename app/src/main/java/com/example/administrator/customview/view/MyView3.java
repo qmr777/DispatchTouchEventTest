@@ -10,6 +10,7 @@ import com.example.administrator.customview.MainActivity;
 
 /**
  * Created by Administrator on 2016/6/29.
+ *
  */
 public class MyView3 extends LinearLayout {
 
@@ -28,14 +29,12 @@ public class MyView3 extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public MyView3(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         Log.e(MainActivity.TAG,msg+" dispatch " + ev.getAction());
+        //return false;
         return super.dispatchTouchEvent(ev);
+        //return false;
     }
 
     @Override

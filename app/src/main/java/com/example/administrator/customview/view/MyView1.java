@@ -10,6 +10,7 @@ import com.example.administrator.customview.MainActivity;
 
 /**
  * Created by Administrator on 2016/6/29.
+ *
  */
 public class MyView1 extends LinearLayout {
 
@@ -33,7 +34,7 @@ public class MyView1 extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.e(MainActivity.TAG,msg+" dispatch " + ev.getAction());
+        Log.e(MainActivity.TAG,msg+" dispatch " + ev.getAction()+" ");
         return super.dispatchTouchEvent(ev);
     }
 

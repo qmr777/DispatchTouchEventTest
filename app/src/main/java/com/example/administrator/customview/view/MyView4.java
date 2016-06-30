@@ -33,13 +33,13 @@ public class MyView4 extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.e(MainActivity.TAG,msg+" dispatch "+ev.getActionMasked());
-        return false;
+        //Log.e(MainActivity.TAG,msg+" dispatch "+ev.getActionMasked());
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.e(MainActivity.TAG,msg+" onTouchEvent");
-        return super.onTouchEvent(event);
+        return false;
     }
 }
