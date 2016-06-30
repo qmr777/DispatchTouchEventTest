@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }*/
     void initView(){
+
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
