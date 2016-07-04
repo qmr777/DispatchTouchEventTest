@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.administrator.customview.Bean.Bean1;
 import com.example.administrator.customview.Bean.Bean2;
+import com.example.administrator.customview.DragRecyclerView.Adapter3;
+import com.example.administrator.customview.DragRecyclerView.MyAdapter;
 import com.example.administrator.customview.Tree.TreeHelper;
 import com.example.administrator.customview.expandRecyclerView.Adapter2;
 import com.example.administrator.customview.expandRecyclerView.CustomTreeNode;
@@ -25,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
     boolean flag = true;
     float x = 0,y = 0;
     List<CustomTreeNode<Bean1>> list = new ArrayList<>();
+    List<String> strings = new ArrayList<>();
     CustomTreeNode<Bean1> root;
     List<Bean2.ResultlistBean.PersonBean> personBeanList = new ArrayList<>();
 
-    Bean2 bean2;
+    //Bean2 bean2;
 
     public static final String TAG = "TAG";
 
@@ -38,16 +42,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initData();
-        initJavaBean2();
-        ERVAdapter adapter = new ERVAdapter(this,root);
+        //initJavaBean2();
+        /*ERVAdapter adapter = new ERVAdapter(this,root);
         adapter.setOnItemClickListener(new ERVAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
             }
+        });*/
+
+        for(int i = 0;i<20;i++)
+            strings.add("第"+i+"项");
+        /*MyAdapter adapter1 = new MyAdapter(this,strings);
+        adapter1.setOnItemClickListener(new MyAdapter.onItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Toast.makeText(MainActivity.this,strings.get(position) + " short",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public boolean onLongClick(int position) {
+                Toast.makeText(MainActivity.this,strings.get(position) + " long",Toast.LENGTH_SHORT).show();
+                return false;
+            }
         });
-        recyclerView.setAdapter(adapter);
-        //recyclerView.setAdapter(new Adapter2(this,personBeanList));
+        recyclerView.addOnItemTouchListener(adapter1);*/
+        Adapter3 adapter3 = new Adapter3(MainActivity.this,strings);
+        recyclerView.addOnItemTouchListener(adapter3);
+        recyclerView.setAdapter(adapter3);
     }
 
     void initData(){
@@ -138,49 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*class RvAdapter extends RecyclerView.Adapter<RvAdapter.Myholder> {
-        List<String> list;
-
-        RvAdapter(List<String> s){
-            this.list = s;
-
-        }
-
-        @Override
-        public Myholder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new Myholder(LayoutInflater.from(MainActivity.this).inflate(R.layout.cell,null));
-        }
-
-        @Override
-        public void onBindViewHolder(Myholder holder, int position) {
-            holder.myView2.setText(list.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-        class Myholder extends RecyclerView.ViewHolder{
-            MyView2 myView2;
-
-            public Myholder(View itemView) {
-                super(itemView);
-                myView2 = (MyView2) itemView.findViewById(R.id.mv2);
-
-            }
-        }
-    }*/
-
-    /*    @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            Log.e(MainActivity.TAG,"MainAty接收event "+event.getAction());
-            return false;
-        }*/
     void initView(){
-
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
 }
