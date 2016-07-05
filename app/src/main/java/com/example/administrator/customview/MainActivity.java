@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.administrator.customview.Bean.Bean1;
 import com.example.administrator.customview.Bean.Bean2;
 import com.example.administrator.customview.DragRecyclerView.Adapter3;
-import com.example.administrator.customview.DragRecyclerView.MyAdapter;
 import com.example.administrator.customview.Tree.TreeHelper;
-import com.example.administrator.customview.expandRecyclerView.Adapter2;
 import com.example.administrator.customview.expandRecyclerView.CustomTreeNode;
-import com.example.administrator.customview.expandRecyclerView.ERVAdapter;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -89,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             CustomTreeNode<Bean1> node = new CustomTreeNode<>(new Bean1("层级3，子节点"+i));
             node.attach(root.childList.get(0).childList.get(0));
         }
-        TreeHelper.traverse(root,list);
+        TreeHelper.traverseToList(root,list);
     }
 
     void initJavaBean2(){

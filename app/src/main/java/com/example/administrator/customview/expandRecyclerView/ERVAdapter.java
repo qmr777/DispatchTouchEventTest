@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.administrator.customview.Bean.Bean1;
 import com.example.administrator.customview.R;
 import com.example.administrator.customview.Tree.TreeHelper;
-import com.example.administrator.customview.Tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class ERVAdapter extends RecyclerView.Adapter<ERVAdapter.MyViewHolder> {
 
     public void refreshList(){
         showList.clear();
-        TreeHelper.traverse(root,showList);
+        TreeHelper.traverseToList(root,showList);
         this.notifyDataSetChanged();
     }
 
@@ -48,7 +47,7 @@ public class ERVAdapter extends RecyclerView.Adapter<ERVAdapter.MyViewHolder> {
         this.context = context;
         this.root = root;
         onClick = new OnClick();
-        TreeHelper.traverse(root,showList);
+        TreeHelper.traverseToList(root,showList);
     }
 
     @Override

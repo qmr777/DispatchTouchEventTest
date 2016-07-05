@@ -1,6 +1,7 @@
 package com.example.administrator.customview.DragRecyclerView;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
     boolean canClick = false;
     View view;//待移动的view
     long time;//按下时的毫秒数
+
 
     public Adapter3(Context context, List<String> strings){
         this.context = context;
@@ -61,22 +63,21 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
     //滑动事件拦截 点击事件 上下滑动允许 在这里
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        /*Log.i("TAG",e.getAction() + " onInterceptTouchEvent");
+        Log.i("TAG",e.getAction() + " onInterceptTouchEvent");
         switch (e.getAction()){
             case MotionEvent.ACTION_DOWN:
                 time = System.currentTimeMillis();
                 downX = e.getX();
                 downY = e.getY();
-                flag = true;
                 canClick = true;
-/*                if(needDragIn) {//需要滑入
+                /*if(needDragIn) {//需要滑入
                     view.scrollTo(0, 0);
                     needDragIn = false;
                     view = null;
-                    flag = false;
                     canClick = false;
-                    return false;
-                }
+                }*/
+                flag = false;
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 changeX = downX - e.getX();
@@ -87,15 +88,14 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                 break;
             case MotionEvent.ACTION_UP:
         }
-        Log.e("TAG",flag+"");
-        return flag;*/
-        return true;
+        Log.e("TAG","onInterceptTouchEvent "+flag);
+        return flag;
     }
 
     //左右滑动在这里
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        Log.i("TAG",e.getAction()+" onTouchEvent");
+        Log.i("TAG",e.getAction()+" onTouchEvent ");
         canClick = false;
         switch (e.getAction()){
             case MotionEvent.ACTION_UP:
@@ -110,6 +110,8 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                     view.scrollTo(dp2px(200),0);
                     needDragIn = true;
                 }
+                Log.i("TAG","view为空 "+(view == null)+" " + rv.getChildAdapterPosition(view));
+                view = null;
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(view == null)
@@ -143,6 +145,16 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                 }
             });
 
+            textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int p = getAdapterPosition();
+                    strings.remove(p);
+                    Adapter3.this.notifyItemRemoved(p);
+                    return true;
+                }
+            });
+
             iv2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -155,7 +167,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
             iv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,getAdapterPosition(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,getAdapterPosition()+"",Toast.LENGTH_SHORT).show();
                 }
             });
         }
