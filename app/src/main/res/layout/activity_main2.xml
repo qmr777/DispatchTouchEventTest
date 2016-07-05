@@ -10,6 +10,7 @@
     tools:context="com.example.administrator.customview.Main2Activity">
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

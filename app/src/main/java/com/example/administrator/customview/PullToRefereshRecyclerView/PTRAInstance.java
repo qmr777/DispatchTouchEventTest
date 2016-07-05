@@ -2,6 +2,7 @@ package com.example.administrator.customview.PullToRefereshRecyclerView;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,20 @@ public class PTRAInstance extends PTRAdapter<String> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @ItemType int viewType) {
+        Log.e("TAG",viewType+"");
         if(viewType == PTRAdapter.TYPE_FOOTER)
-            return new PTRAdapter.FooterHolder(footerView);
+            return new PTRAdapter.FooterHolder(LayoutInflater.from(context).inflate(footerViewID,parent,false));
         else if(viewType == PTRAdapter.TYPE_DATA)
-            return new DataHolder(LayoutInflater.from(context).inflate(R.layout.cell2,null));
+            return new DataHolder(LayoutInflater.from(context).inflate(R.layout.cell2,parent,false));
 
         return null;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (haveFooterView && position == list.size())
+            return TYPE_FOOTER;
+        return TYPE_DATA;
     }
 
     @Override
@@ -37,7 +46,7 @@ public class PTRAInstance extends PTRAdapter<String> {
             ((DataHolder) holder).textView.setText(list.get(position));
     }
 
-    class DataHolder extends RecyclerView.ViewHolder {
+    static class DataHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
 

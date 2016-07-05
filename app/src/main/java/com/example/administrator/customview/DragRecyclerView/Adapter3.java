@@ -1,6 +1,7 @@
 package com.example.administrator.customview.DragRecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.customview.Main2Activity;
 import com.example.administrator.customview.R;
 
 import java.util.List;
@@ -144,7 +146,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("TAG","121212 "+getAdapterPosition());
+                    context.startActivity(new Intent(context, Main2Activity.class));
                 }
             });
 

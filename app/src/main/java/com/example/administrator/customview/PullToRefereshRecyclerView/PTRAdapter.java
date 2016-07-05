@@ -3,11 +3,9 @@ package com.example.administrator.customview.PullToRefereshRecyclerView;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -29,12 +27,13 @@ public abstract class PTRAdapter<E> extends RecyclerView.Adapter<RecyclerView.Vi
     List<E> list;
     Context context;
     View footerView;
+    int footerViewID;
 
-    public boolean isHasFooterView() {
-        return hasFooterView;
+    public boolean haveFooterView() {
+        return haveFooterView;
     }
 
-    boolean hasFooterView = false;//有尾布局
+    boolean haveFooterView = false;//有尾布局
 
     private int dp2px(int dp){
         return (int) (context.getResources().getDisplayMetrics().density * dp + 0.5f);
@@ -46,17 +45,18 @@ public abstract class PTRAdapter<E> extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void addFooterView(int layoutID) {
-        addFooterView(LayoutInflater.from(context).inflate(layoutID, null));
+        addFooterView(LayoutInflater.from(context).inflate(layoutID, null,false));
+        footerViewID = layoutID;
     }
 
     public void addFooterView(View footerView) {
         this.footerView = footerView;
-        hasFooterView = true;
+        haveFooterView = true;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (hasFooterView & position == list.size() + 1)
+        if (haveFooterView & position == list.size() + 1)
             return TYPE_FOOTER;
         return TYPE_DATA;
     }
