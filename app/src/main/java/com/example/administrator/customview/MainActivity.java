@@ -1,10 +1,15 @@
 package com.example.administrator.customview;
 
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.administrator.customview.Bean.Bean1;
 import com.example.administrator.customview.Bean.Bean2;
@@ -23,11 +28,13 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     boolean flag = true;
     float x = 0,y = 0;
+    SwipeRefreshLayout swipeRefreshLayout;
     List<CustomTreeNode<Bean1>> list = new ArrayList<>();
     List<String> strings = new ArrayList<>();
     CustomTreeNode<Bean1> root;
     List<Bean2.ResultlistBean.PersonBean> personBeanList = new ArrayList<>();
 
+    Handler mhandler = new Handler();
     //Bean2 bean2;
 
     public static final String TAG = "TAG";
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initData();
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         //initJavaBean2();
         /*ERVAdapter adapter = new ERVAdapter(this,root);
         adapter.setOnItemClickListener(new ERVAdapter.onItemClickListener() {
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Adapter3 adapter3 = new Adapter3(MainActivity.this,strings);
         recyclerView.addOnItemTouchListener(adapter3);
         recyclerView.setAdapter(adapter3);
+
     }
 
     void initData(){
@@ -156,10 +165,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     void initView(){
+
+
         recyclerView = (RecyclerView) findViewById(R.id.rv);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(final RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                boolean tryToLoadMore = newState == RecyclerView.SCROLL_STATE_DRAGGING &&
+                        ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition()
+                                == recyclerView.getAdapter().getItemCount()-1;
+
+                Log.e("TAG1",newState+"" + tryToLoadMore + " "+recyclerView.getAdapter().getItemCount()+" "
+                        +((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition());
+                if(tryToLoadMore){//最后一个可见 并且是拖动
+                    swipeRefreshLayout.setRefreshing(true);
+                    Toast.makeText(MainActivity.this,"加载更多",Toast.LENGTH_SHORT).show();
+                    mhandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i = 0;i<5;i++)
+                                strings.add("第" + strings.size() + "项");
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }, 4000);
+
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light,
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_purple);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                for(int i = 0;i<5;i++) {
+                    strings.add("第" + strings.size() + "项");
+                    mhandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                    }, 6000);
+                }
+            }
+        });
+
     }
 
 }

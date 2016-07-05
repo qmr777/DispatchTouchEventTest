@@ -1,6 +1,7 @@
 package com.example.administrator.customview.DragRecyclerView;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -76,6 +77,8 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                     view = null;
                     canClick = false;
                 }*/
+                view = rv.findChildViewUnder(e.getX(),e.getY());
+                //Log.w("TAG","view x ---> "+view.getScrollX());
                 flag = false;
 
                 break;
@@ -83,7 +86,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                 changeX = downX - e.getX();
                 changeY = downY - e.getY();
                 Log.d("TAG",changeX+"");
-                flag = changeX>30&&Math.abs(changeY)<100;//x移动超过30像素,y移动不过100 才传给onTouchEvent
+                flag = Math.abs(changeX)>40&&Math.abs(changeY)<100;//x移动超过30像素,y移动不过100 才传给onTouchEvent
                 canClick = Math.abs(changeY)<5;
                 break;
             case MotionEvent.ACTION_UP:
@@ -117,7 +120,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                 if(view == null)
                     view = rv.findChildViewUnder(e.getX(),e.getY());//获取准备拖拽的View
 
-                if(downX - e.getX()<=dp2px(200)&&downX - e.getX()>0)//在一定范围之内滑动时
+                if(downX - e.getX()<=dp2px(200)&&downX - e.getX()>-200)//在一定范围之内滑动时
                     view.scrollTo((int) (downX - e.getX()),0);
                 break;
         }
@@ -168,6 +171,7 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyViewHolder>
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context,getAdapterPosition()+"",Toast.LENGTH_SHORT).show();
+                    //   Snackbar.make(,"a123123",Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
