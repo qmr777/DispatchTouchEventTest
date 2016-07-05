@@ -90,6 +90,7 @@ public class PTRecyclerView extends RecyclerView {
             Log.e("TAG",getScrollY()+" "+getHeight());
             //有bug！回弹位置不正确
             smoothScrollToPosition(manager.findFirstVisibleItemPosition()-1);
+
         }
     }
 
