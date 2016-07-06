@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/5.
+ *
  */
 public abstract class PTRAdapter<E> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
